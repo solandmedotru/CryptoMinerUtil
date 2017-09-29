@@ -7,6 +7,8 @@ import io.realm.annotations.PrimaryKey;
 public class Coin extends RealmObject {
 
     @PrimaryKey
+    private String id;
+
     private String tag;
     private Long dayBlocks;
     private Double dayBtc;
@@ -20,6 +22,15 @@ public class Coin extends RealmObject {
     private Long shares;
     private Long timeSinceLast;
     private Long workers;
+    private String timeStamp;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Long getDayBlocks() {
         return dayBlocks;
@@ -123,5 +134,13 @@ public class Coin extends RealmObject {
 
     public void setWorkers(Long workers) {
         this.workers = workers;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }
