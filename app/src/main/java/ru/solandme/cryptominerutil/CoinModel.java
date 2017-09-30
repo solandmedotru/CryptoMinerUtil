@@ -33,7 +33,7 @@ public class CoinModel implements IModel {
     }
 
     @Override
-    public void onClose() {
+    public void onDestroy() {
         db.close();
     }
 

@@ -24,12 +24,6 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.detachView();
-    }
-
-    @Override
     public void showProgress() {
         progressDialog = ProgressDialog.show(this, "", "Please, wait.");
     }
@@ -38,6 +32,15 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
     public void hideProgress() {
         if (progressDialog != null) {
             progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+        if (isFinishing()) {
+            presenter.destroy();
         }
     }
 }

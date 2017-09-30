@@ -4,5 +4,5 @@ public interface IModel {
 
     void loadCoinList();
 
-    void onClose();
+    void onDestroy();
 }

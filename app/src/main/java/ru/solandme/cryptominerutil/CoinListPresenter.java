@@ -17,7 +17,6 @@ public class CoinListPresenter implements ICoinListPresenter {
     @Override
     public void detachView() {
         this.view = null;
-        model.onClose();
     }
 
     @Override
@@ -28,5 +27,10 @@ public class CoinListPresenter implements ICoinListPresenter {
     @Override
     public void loadCoinList() {
         model.loadCoinList(); //TODO сделать загрузку данных из репозитория. Или с базы если недавно обновлялись или из сети.
+    }
+
+    @Override
+    public void destroy() {
+        model.onDestroy();
     }
 }

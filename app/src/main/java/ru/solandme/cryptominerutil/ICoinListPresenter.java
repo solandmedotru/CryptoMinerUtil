@@ -5,4 +5,5 @@ public interface ICoinListPresenter {
     void detachView();
     void viewIsReady();
     void loadCoinList();
+    void destroy();
 }
