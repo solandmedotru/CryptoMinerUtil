@@ -5,8 +5,8 @@ public class CoinListPresenter implements ICoinListPresenter {
     private ICoinListView view;
     private IModel model;
 
-    public CoinListPresenter(IModel model) {
-        this.model = model;
+    public CoinListPresenter() {
+        model = new CoinModel();
     }
 
     @Override

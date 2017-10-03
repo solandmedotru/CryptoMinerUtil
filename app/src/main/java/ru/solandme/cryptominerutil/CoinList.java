@@ -9,7 +9,7 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
     private ProgressDialog progressDialog;
 
     private ICoinListPresenter presenter;
-    private IModel model;
+
 
 
     @Override
@@ -17,17 +17,21 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_list);
 
-        model = new CoinModel();
-        presenter = new CoinListPresenter(model);
+        if (presenter == null) {
+            presenter = new CoinListPresenter();
+        }
+
         presenter.attachView(this);
         presenter.viewIsReady();
     }
 
+    //Методы вызывается только из презентера
     @Override
     public void showProgress() {
         progressDialog = ProgressDialog.show(this, "", "Please, wait.");
     }
 
+    //Методы вызывается только из презентера
     @Override
     public void hideProgress() {
         if (progressDialog != null) {
