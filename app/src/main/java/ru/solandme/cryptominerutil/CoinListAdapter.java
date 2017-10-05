@@ -26,11 +26,11 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         CoinViewHolder(View itemView) {
             super(itemView);
             coinName = itemView.findViewById(R.id.coin_name);
-            coinTag = itemView.findViewById(R.id.coin_tag);
+            coinTag = itemView.findViewById(R.id.coin_tag_field);
             algorithm = itemView.findViewById(R.id.algorithm);
-            hashrate = itemView.findViewById(R.id.hashrate);
-            profitBtcByDay = itemView.findViewById(R.id.profit_btc_day);
-            profitMoneyByDay = itemView.findViewById(R.id.profit_money_day);
+            hashrate = itemView.findViewById(R.id.hashrate_field);
+            profitBtcByDay = itemView.findViewById(R.id.profit_btc_day_field);
+            profitMoneyByDay = itemView.findViewById(R.id.profit_money_day_field);
         }
     }
 
@@ -82,10 +82,7 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    void sort(){
-        Collections.sort(coins);
-        notifyDataSetChanged();
-    }
+
 
 
 }

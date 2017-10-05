@@ -2,6 +2,10 @@ package ru.solandme.cryptominerutil;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ru.solandme.cryptominerutil.pojo.Coin;
@@ -33,7 +37,8 @@ public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack {
     @Override
     public void loadCoinList() {
         view.showProgress();
-        model.loadCoinList(); //TODO сделать загрузку данных из репозитория. Или с базы если недавно обновлялись или из сети.
+        List<String> arrayList = Arrays.asList("scrypt", "sha256", "x11"); //TODO сделать список изменяемым и бырать из SharedPrefs
+        model.loadCoinList(arrayList); //TODO сделать загрузку данных из репозитория. Или с базы если недавно обновлялись или из сети.
     }
 
     @Override
@@ -45,11 +50,21 @@ public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack {
     @Override
     public void onSuccess(List<Coin> coins) {
         view.hideProgress();
-        view.showCoinList(coins);
+        view.showCoinList(sortByProfit(coins));
     }
 
     @Override
     public void onError(String errorMessage) {
         view.hideProgress();
+    }
+
+    private List<Coin> sortByProfit(List<Coin> coins) {
+        Collections.sort(coins, new Comparator<Coin>() {
+            @Override
+            public int compare(Coin c1, Coin c2) {
+                return c2.getDayBtc().compareTo(c1.getDayBtc());
+            }
+        });
+        return coins;
     }
 }

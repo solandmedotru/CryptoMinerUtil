@@ -12,20 +12,20 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Bitcoin"
-        app:layout_constraintEnd_toStartOf="@+id/coin_tag"
+        app:layout_constraintEnd_toStartOf="@+id/coin_tag_field"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/coin_tag"
+        android:id="@+id/coin_tag_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="BTC"
-        app:layout_constraintEnd_toStartOf="@+id/hashrate"
+        app:layout_constraintEnd_toStartOf="@+id/hashrate_field"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/coin_name"
@@ -35,43 +35,42 @@
         android:id="@+id/algorithm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="sha-256"
-        app:layout_constraintEnd_toEndOf="@+id/coin_tag"
+        app:layout_constraintEnd_toEndOf="@+id/coin_tag_field"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coin_name" />
 
     <TextView
-        android:id="@+id/hashrate"
+        android:id="@+id/hashrate_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="234 Mh/s"
-        app:layout_constraintEnd_toStartOf="@+id/profit_btc_day"
+        app:layout_constraintEnd_toStartOf="@+id/profit_btc_day_field"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@+id/coin_tag"
+        app:layout_constraintStart_toEndOf="@+id/coin_tag_field"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/profit_btc_day"
+        android:id="@+id/profit_btc_day_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="0.023 m₿/d"
-        app:layout_constraintEnd_toStartOf="@+id/profit_money_day"
+        app:layout_constraintEnd_toStartOf="@+id/profit_money_day_field"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@+id/hashrate"
+        app:layout_constraintStart_toEndOf="@+id/hashrate_field"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/profit_money_day"
+        android:id="@+id/profit_money_day_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -81,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@+id/profit_btc_day"
+        app:layout_constraintStart_toEndOf="@+id/profit_btc_day_field"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

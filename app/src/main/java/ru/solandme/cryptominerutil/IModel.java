@@ -6,7 +6,7 @@ import ru.solandme.cryptominerutil.pojo.Coin;
 
 public interface IModel {
 
-    void loadCoinList();
+    void loadCoinList(List<String> arrayList);
 
     void onDestroy();
 

@@ -71,7 +71,6 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
     @Override
     public void showCoinList(List<Coin> coins) {
         coinListAdapter = new CoinListAdapter(coins, algos);
-        coinListAdapter.sort();
         coinList.setAdapter(coinListAdapter);
     }
 

@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,12 +22,14 @@ import ru.solandme.cryptominerutil.pojo.Coin;
 public class CoinModel implements IModel {
 
     private IModel.CallBack callBack;
+    private List<String> excludeAlgo;
 
     CoinModel(CallBack callBack) {
         this.callBack = callBack;
     }
 
-    public void loadCoinList() {
+    public void loadCoinList(List<String> excludeAlgo) {
+        this.excludeAlgo = excludeAlgo;
         syncDb();
     }
 
@@ -59,6 +62,8 @@ public class CoinModel implements IModel {
                             while (keys.hasNext()) {
                                 String key = keys.next();
                                 if (jsonObject.get(key) instanceof JSONObject) {
+
+                                    if(excludeAlgo.contains(jsonObject.getJSONObject(key).getString("algo"))) continue; //Исключаем алго которые не нужно обрабатывать
 
                                     Coin coin = new Coin();
                                     coin.setTag(key);
