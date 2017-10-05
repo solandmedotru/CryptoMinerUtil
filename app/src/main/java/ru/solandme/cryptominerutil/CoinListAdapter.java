@@ -5,9 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 import ru.solandme.cryptominerutil.pojo.Algo;
@@ -22,7 +22,6 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         private TextView hashrate;
         private TextView profitBtcByDay;
         private TextView profitMoneyByDay;
-        private ImageView coinImage;
 
         CoinViewHolder(View itemView) {
             super(itemView);
@@ -32,8 +31,6 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
             hashrate = itemView.findViewById(R.id.hashrate);
             profitBtcByDay = itemView.findViewById(R.id.profit_btc_day);
             profitMoneyByDay = itemView.findViewById(R.id.profit_money_day);
-            coinImage = itemView.findViewById(R.id.coin_image);
-
         }
     }
 
@@ -60,9 +57,8 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         holder.coinTag.setText(coins.get(position).getTag());
         holder.algorithm.setText(coins.get(position).getAlgo());
         holder.hashrate.setText(getHashrateByAlgo(coins.get(position).getAlgo()));
-        holder.coinName.setText(coins.get(position).getName());
-        holder.coinName.setText(coins.get(position).getName());
-        holder.coinImage.setImageResource(R.drawable.bitcoin);
+        holder.profitBtcByDay.setText(coins.get(position).getDayBtc().toString());
+        holder.profitMoneyByDay.setText(coins.get(position).getDayBtc()*4400 + ""); //TODO добавить расчет по текущему курсу
         Log.i("onBindViewHolder", "во вьюхолдере");
 
     }
@@ -79,6 +75,16 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
     public int getItemCount() {
         Log.i("onGetItemCount", "" + coins.size());
         return coins.size();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    void sort(){
+        Collections.sort(coins);
+        notifyDataSetChanged();
     }
 
 

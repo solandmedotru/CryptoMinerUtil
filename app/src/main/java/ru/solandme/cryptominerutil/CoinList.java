@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,15 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_list);
 
+        //Временнве данные, TODO сделать чтение из SharedPrefs
+        Algo scrypt = new Algo();
+        scrypt.setName("scrypt");
+        scrypt.setHashrate((long) 1000.0);
+        algos.add(scrypt);
+        //----------------
+
+
+
         initViews();
 
         if (presenter == null) {
@@ -40,7 +49,8 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
 
     private void initViews() {
         coinList = findViewById(R.id.coin_list_rv);
-
+        coinList.setHasFixedSize(true);
+        coinList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     //Методы вызывается только из презентера
@@ -57,11 +67,12 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
         }
     }
 
+    //Методы вызывается только из презентера
     @Override
     public void showCoinList(List<Coin> coins) {
         coinListAdapter = new CoinListAdapter(coins, algos);
+        coinListAdapter.sort();
         coinList.setAdapter(coinListAdapter);
-        coinList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

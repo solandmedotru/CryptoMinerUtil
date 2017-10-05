@@ -1,7 +1,9 @@
 
 package ru.solandme.cryptominerutil.pojo;
 
-public class Coin {
+import android.support.annotation.NonNull;
+
+public class Coin implements Comparable<Coin>{
 
     private String id;
 
@@ -138,5 +140,11 @@ public class Coin {
 
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+
+    @Override
+    public int compareTo(@NonNull Coin coin) {
+        return coin.getDayBtc().compareTo(this.getDayBtc());
     }
 }
