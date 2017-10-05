@@ -70,7 +70,7 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
     //Методы вызывается только из презентера
     @Override
     public void showCoinList(List<Coin> coins) {
-        coinListAdapter = new CoinListAdapter(coins, algos);
+        coinListAdapter = new CoinListAdapter(this, coins, algos);
         coinList.setAdapter(coinListAdapter);
     }
 

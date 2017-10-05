@@ -1,9 +1,13 @@
 package ru.solandme.cryptominerutil;
 
+import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,6 +16,7 @@ import ru.solandme.cryptominerutil.pojo.Algo;
 import ru.solandme.cryptominerutil.pojo.Coin;
 
 public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinViewHolder> {
+    private static int currentPosition = 0;
 
     public static class CoinViewHolder extends RecyclerView.ViewHolder {
         private TextView coinName;
@@ -20,6 +25,8 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         private TextView hashrate;
         private TextView profitBtcByDay;
         private TextView profitMoneyByDay;
+        private ConstraintLayout constraintLayout;
+        private ConstraintLayout container;
 
         CoinViewHolder(View itemView) {
             super(itemView);
@@ -29,15 +36,20 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
             hashrate = itemView.findViewById(R.id.hashrate_field);
             profitBtcByDay = itemView.findViewById(R.id.profit_btc_day_field);
             profitMoneyByDay = itemView.findViewById(R.id.profit_money_day_field);
+
+            constraintLayout = itemView.findViewById(R.id.expandLayout);
+            container = itemView.findViewById(R.id.container);
         }
     }
 
     private List<Coin> coins;
     private List<Algo> algos;
+    private Context context;
 
-    CoinListAdapter(List<Coin> coins, List<Algo> algos) {
+    CoinListAdapter(Context context, List<Coin> coins, List<Algo> algos) {
         this.coins = coins;
         this.algos = algos;
+        this.context = context;
     }
 
     @Override
@@ -48,13 +60,36 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
     }
 
     @Override
-    public void onBindViewHolder(CoinViewHolder holder, int position) {
-        holder.coinName.setText(coins.get(position).getName());
-        holder.coinTag.setText(coins.get(position).getTag());
-        holder.algorithm.setText(coins.get(position).getAlgo());
-        holder.hashrate.setText(getHashrateByAlgo(coins.get(position).getAlgo()));
-        holder.profitBtcByDay.setText(coins.get(position).getDayBtc().toString());
-        holder.profitMoneyByDay.setText(coins.get(position).getDayBtc()*4400 + ""); //TODO добавить расчет по текущему курсу
+    public void onBindViewHolder(CoinViewHolder holder, final int position) {
+        Coin coin = coins.get(position);
+        holder.coinName.setText(coin.getName());
+        holder.coinTag.setText(coin.getTag());
+        holder.algorithm.setText(coin.getAlgo());
+        holder.hashrate.setText(getHashrateByAlgo(coin.getAlgo()));
+        holder.profitBtcByDay.setText(coin.getDayBtc().toString());
+        holder.profitMoneyByDay.setText(coin.getDayBtc() * 4400 + ""); //TODO добавить расчет по текущему курсу
+        holder.constraintLayout.setVisibility(View.GONE);
+
+        if (currentPosition == position) {
+
+            if (holder.constraintLayout.getVisibility() == View.VISIBLE) {
+                holder.constraintLayout.setVisibility(View.GONE);
+                holder.constraintLayout.animate().translationY(holder.constraintLayout.getHeight()).setDuration(2000);;
+            } else {
+                holder.constraintLayout.setVisibility(View.VISIBLE);
+                holder.constraintLayout.animate().translationY(0).setDuration(2000);;
+            }
+
+
+        }
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentPosition = position;
+                notifyDataSetChanged();
+            }
+        });
     }
 
     private String getHashrateByAlgo(String algorithm) {
@@ -74,8 +109,6 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-
-
 
 
 }
