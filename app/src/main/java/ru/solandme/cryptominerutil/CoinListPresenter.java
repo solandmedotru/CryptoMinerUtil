@@ -1,17 +1,18 @@
 package ru.solandme.cryptominerutil;
 
+import android.util.Log;
+
 import java.util.List;
 
 import ru.solandme.cryptominerutil.pojo.Coin;
 
-public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack{
+public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack {
 
     private ICoinListView view;
     private IModel model;
-    private IModel.CallBack callback;
 
     public CoinListPresenter() {
-        model = new CoinModel(callback);
+        model = new CoinModel(this);
     }
 
     @Override
@@ -31,11 +32,13 @@ public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack{
 
     @Override
     public void loadCoinList() {
+        view.showProgress();
         model.loadCoinList(); //TODO сделать загрузку данных из репозитория. Или с базы если недавно обновлялись или из сети.
     }
 
     @Override
     public void destroy() {
+        view.hideProgress();
         model.onDestroy();
     }
 
@@ -47,6 +50,6 @@ public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack{
 
     @Override
     public void onError(String errorMessage) {
-
+        view.hideProgress();
     }
 }

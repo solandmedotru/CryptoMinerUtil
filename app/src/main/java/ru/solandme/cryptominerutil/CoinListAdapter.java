@@ -1,6 +1,7 @@
 package ru.solandme.cryptominerutil;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,9 @@ import java.util.List;
 import ru.solandme.cryptominerutil.pojo.Algo;
 import ru.solandme.cryptominerutil.pojo.Coin;
 
-public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.ViewHolder> {
-    private List<Coin> coins;
-    private List<Algo> algos;
+public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinViewHolder> {
 
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public static class CoinViewHolder extends RecyclerView.ViewHolder {
         private TextView coinName;
         private TextView coinTag;
         private TextView algorithm;
@@ -26,7 +24,7 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.ViewHo
         private TextView profitMoneyByDay;
         private ImageView coinImage;
 
-        ViewHolder(View itemView) {
+        CoinViewHolder(View itemView) {
             super(itemView);
             coinName = itemView.findViewById(R.id.coin_name);
             coinTag = itemView.findViewById(R.id.coin_tag);
@@ -39,20 +37,25 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.ViewHo
         }
     }
 
-    public CoinListAdapter(List<Coin> coins, List<Algo> algos) {
+    private List<Coin> coins;
+    private List<Algo> algos;
+
+    CoinListAdapter(List<Coin> coins, List<Algo> algos) {
         this.coins = coins;
         this.algos = algos;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CoinViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i("onCreateViewHolder", "во вьюхолдере");
+
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.coin_row, parent, false);
-        return new ViewHolder(v);
+        return new CoinViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(CoinViewHolder holder, int position) {
         holder.coinName.setText(coins.get(position).getName());
         holder.coinTag.setText(coins.get(position).getTag());
         holder.algorithm.setText(coins.get(position).getAlgo());
@@ -60,6 +63,7 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.ViewHo
         holder.coinName.setText(coins.get(position).getName());
         holder.coinName.setText(coins.get(position).getName());
         holder.coinImage.setImageResource(R.drawable.bitcoin);
+        Log.i("onBindViewHolder", "во вьюхолдере");
 
     }
 
@@ -73,6 +77,7 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
+        Log.i("onGetItemCount", "" + coins.size());
         return coins.size();
     }
 

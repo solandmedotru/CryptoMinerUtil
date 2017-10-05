@@ -27,8 +27,7 @@ public class CoinModel implements IModel {
     }
 
     public void loadCoinList() {
-        List<Coin> coins = new ArrayList<>();
-        syncDb(coins);
+        syncDb();
     }
 
     @Override
@@ -36,7 +35,8 @@ public class CoinModel implements IModel {
 
     }
 
-    private void syncDb(final List<Coin> coins) {
+    private void syncDb() {
+
         Retrofit retrofit = getRetrofit();
 
         ZPoolService zpoolApi = retrofit.create(ZPoolService.class);
@@ -47,6 +47,7 @@ public class CoinModel implements IModel {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 Log.i("Response", response.body());
+                List<Coin> coins = new ArrayList<>();
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         Log.i("onSuccess", response.body());
@@ -61,28 +62,27 @@ public class CoinModel implements IModel {
 
                                     Coin coin = new Coin();
                                     coin.setTag(key);
-                                    coin.setAlgo(jsonObject.getString("algo"));
-                                    coin.setPort(jsonObject.getLong("port"));
-                                    coin.setName(jsonObject.getString("name"));
-                                    coin.setHeight(jsonObject.getLong("height"));
-                                    coin.setWorkers(jsonObject.getLong("workers"));
-                                    coin.setShares(jsonObject.getLong("shares"));
-                                    coin.setHashRate(jsonObject.getLong("hashrate"));
-                                    coin.setEstimate(jsonObject.getString("estimate"));
-                                    coin.setDayBlocks(jsonObject.getLong("24h_blocks"));
-                                    coin.setDayBtc(jsonObject.getDouble("24h_btc"));
-                                    coin.setLastBlock(jsonObject.getLong("lastblock"));
-                                    coin.setTimeSinceLast(jsonObject.getLong("timesincelast"));
+
+                                    coin.setAlgo(jsonObject.getJSONObject(key).getString("algo"));
+                                    coin.setPort(jsonObject.getJSONObject(key).getLong("port"));
+                                    coin.setName(jsonObject.getJSONObject(key).getString("name"));
+                                    coin.setHeight(jsonObject.getJSONObject(key).getLong("height"));
+                                    coin.setWorkers(jsonObject.getJSONObject(key).getLong("workers"));
+                                    coin.setShares(jsonObject.getJSONObject(key).getLong("shares"));
+                                    coin.setHashRate(jsonObject.getJSONObject(key).getLong("hashrate"));
+                                    coin.setEstimate(jsonObject.getJSONObject(key).getString("estimate"));
+                                    coin.setDayBlocks(jsonObject.getJSONObject(key).getLong("24h_blocks"));
+                                    coin.setDayBtc(jsonObject.getJSONObject(key).getDouble("24h_btc"));
+                                    coin.setLastBlock(jsonObject.getJSONObject(key).getLong("lastblock"));
+                                    coin.setTimeSinceLast(jsonObject.getJSONObject(key).getLong("timesincelast"));
 
                                     coins.add(coin);
                                 }
-
-                                callBack.onSuccess(coins);
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        callBack.onSuccess(coins);
                     } else {
                         Log.i("onEmptyResponse", "Returned empty response");
                         callBack.onError("Returned empty response");

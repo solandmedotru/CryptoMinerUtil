@@ -1,11 +1,13 @@
 package ru.solandme.cryptominerutil;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.solandme.cryptominerutil.pojo.Algo;
@@ -15,12 +17,10 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
 
     private ProgressDialog progressDialog;
     private RecyclerView coinList;
-    private CoinListAdapter coinListAdapter;
-    private List<Coin> coins;
-    private List<Algo> algos;
+    CoinListAdapter coinListAdapter;
+    private List<Algo> algos = new ArrayList<>();
 
     private ICoinListPresenter presenter;
-
 
 
     @Override
@@ -40,11 +40,6 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
 
     private void initViews() {
         coinList = findViewById(R.id.coin_list_rv);
-        coinList.setLayoutManager(new LinearLayoutManager(this));
-        coinListAdapter = new CoinListAdapter(coins, algos);
-        coinList.setAdapter(coinListAdapter);
-
-        coinList.setHasFixedSize(true);
 
     }
 
@@ -64,9 +59,9 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
 
     @Override
     public void showCoinList(List<Coin> coins) {
-        this.coins = coins;
-        coinListAdapter.notifyDataSetChanged();
-
+        coinListAdapter = new CoinListAdapter(coins, algos);
+        coinList.setAdapter(coinListAdapter);
+        coinList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
