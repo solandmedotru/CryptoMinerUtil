@@ -1,12 +1,17 @@
 package ru.solandme.cryptominerutil;
 
-public class CoinListPresenter implements ICoinListPresenter {
+import java.util.List;
+
+import ru.solandme.cryptominerutil.pojo.Coin;
+
+public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack{
 
     private ICoinListView view;
     private IModel model;
+    private IModel.CallBack callback;
 
     public CoinListPresenter() {
-        model = new CoinModel();
+        model = new CoinModel(callback);
     }
 
     @Override
@@ -32,5 +37,16 @@ public class CoinListPresenter implements ICoinListPresenter {
     @Override
     public void destroy() {
         model.onDestroy();
+    }
+
+    @Override
+    public void onSuccess(List<Coin> coins) {
+        view.hideProgress();
+        view.showCoinList(coins);
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+
     }
 }

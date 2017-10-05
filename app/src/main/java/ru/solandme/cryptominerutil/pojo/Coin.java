@@ -1,12 +1,8 @@
 
 package ru.solandme.cryptominerutil.pojo;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+public class Coin {
 
-public class Coin extends RealmObject {
-
-    @PrimaryKey
     private String id;
 
     private String tag;

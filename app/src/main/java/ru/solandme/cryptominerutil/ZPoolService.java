@@ -7,6 +7,4 @@ public interface ZPoolService {
     @GET("currencies")
     Call<String> coinList();
 
-    @GET("status")
-    Call<String> algoList();
 }
