@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class CoinModel implements IModel {
         stringCoins.enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                Log.i("Response", response.body());
+
                 List<Coin> coins = new ArrayList<>();
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
@@ -89,7 +88,6 @@ public class CoinModel implements IModel {
                         }
                         callBack.onSuccess(coins);
                     } else {
-                        Log.i("onEmptyResponse", "Returned empty response");
                         callBack.onError("Returned empty response");
                     }
                 }

@@ -1,13 +1,11 @@
 package ru.solandme.cryptominerutil;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.List;
 
 import ru.solandme.cryptominerutil.pojo.Algo;
@@ -44,8 +42,6 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
 
     @Override
     public CoinViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i("onCreateViewHolder", "во вьюхолдере");
-
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.coin_row, parent, false);
         return new CoinViewHolder(v);
@@ -59,8 +55,6 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         holder.hashrate.setText(getHashrateByAlgo(coins.get(position).getAlgo()));
         holder.profitBtcByDay.setText(coins.get(position).getDayBtc().toString());
         holder.profitMoneyByDay.setText(coins.get(position).getDayBtc()*4400 + ""); //TODO добавить расчет по текущему курсу
-        Log.i("onBindViewHolder", "во вьюхолдере");
-
     }
 
     private String getHashrateByAlgo(String algorithm) {
@@ -73,7 +67,6 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
 
     @Override
     public int getItemCount() {
-        Log.i("onGetItemCount", "" + coins.size());
         return coins.size();
     }
 
