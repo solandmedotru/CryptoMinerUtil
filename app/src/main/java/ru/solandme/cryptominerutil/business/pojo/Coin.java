@@ -1,7 +1,6 @@
 
-package ru.solandme.cryptominerutil.pojo;
+package ru.solandme.cryptominerutil.business.pojo;
 
-import android.support.annotation.NonNull;
 
 public class Coin {
 

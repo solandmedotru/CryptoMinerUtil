@@ -1,4 +1,4 @@
-package ru.solandme.cryptominerutil;
+package ru.solandme.cryptominerutil.business;
 
 
 import android.support.annotation.NonNull;
@@ -16,14 +16,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import ru.solandme.cryptominerutil.pojo.Coin;
+import ru.solandme.cryptominerutil.data.network.ZPoolService;
+import ru.solandme.cryptominerutil.business.pojo.Coin;
 
 public class CoinModel implements IModel {
 
     private IModel.CallBack callBack;
     private List<String> excludeAlgo;
 
-    CoinModel(CallBack callBack) {
+    public CoinModel(CallBack callBack) {
         this.callBack = callBack;
     }
 

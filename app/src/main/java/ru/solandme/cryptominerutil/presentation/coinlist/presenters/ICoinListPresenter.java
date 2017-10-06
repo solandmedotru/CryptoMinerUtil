@@ -1,5 +1,7 @@
-package ru.solandme.cryptominerutil;
+package ru.solandme.cryptominerutil.presentation.coinlist.presenters;
 
+
+import ru.solandme.cryptominerutil.presentation.coinlist.views.ICoinListView;
 
 public interface ICoinListPresenter {
     void attachView(ICoinListView view);
@@ -9,4 +11,5 @@ public interface ICoinListPresenter {
     void destroy();
 
 
+    void settingsClicked();
 }

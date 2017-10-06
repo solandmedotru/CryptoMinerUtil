@@ -1,8 +1,8 @@
-package ru.solandme.cryptominerutil;
+package ru.solandme.cryptominerutil.business;
 
 import java.util.List;
 
-import ru.solandme.cryptominerutil.pojo.Coin;
+import ru.solandme.cryptominerutil.business.pojo.Coin;
 
 public interface IModel {
 

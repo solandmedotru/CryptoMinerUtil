@@ -37,4 +37,5 @@ dependencies {
 
 
     testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:design:26.1.0'
 }

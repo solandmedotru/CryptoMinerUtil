@@ -1,4 +1,4 @@
-package ru.solandme.cryptominerutil;
+package ru.solandme.cryptominerutil.presentation.coinlist.views;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
@@ -13,8 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import ru.solandme.cryptominerutil.pojo.Algo;
-import ru.solandme.cryptominerutil.pojo.Coin;
+import ru.solandme.cryptominerutil.R;
+import ru.solandme.cryptominerutil.business.pojo.Algo;
+import ru.solandme.cryptominerutil.business.pojo.Coin;
 
 public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinViewHolder> {
     private static int currentPosition = 0;

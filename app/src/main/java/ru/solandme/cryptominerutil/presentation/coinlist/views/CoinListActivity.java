@@ -1,19 +1,27 @@
-package ru.solandme.cryptominerutil;
+package ru.solandme.cryptominerutil.presentation.coinlist.views;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.solandme.cryptominerutil.pojo.Algo;
-import ru.solandme.cryptominerutil.pojo.Coin;
+import ru.solandme.cryptominerutil.R;
+import ru.solandme.cryptominerutil.business.pojo.Algo;
+import ru.solandme.cryptominerutil.business.pojo.Coin;
+import ru.solandme.cryptominerutil.presentation.coinlist.presenters.CoinListPresenter;
+import ru.solandme.cryptominerutil.presentation.coinlist.presenters.ICoinListPresenter;
+import ru.solandme.cryptominerutil.presentation.settings.views.SettingsActivity;
 
-public class CoinList extends AppCompatActivity implements ICoinListView {
+public class CoinListActivity extends AppCompatActivity implements ICoinListView {
 
     private ProgressDialog progressDialog;
     private RecyclerView coinList;
@@ -28,13 +36,20 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_list);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(false);
+        }
+
         //Временнве данные, TODO сделать чтение из SharedPrefs
         Algo scrypt = new Algo();
         scrypt.setName("scrypt");
         scrypt.setHashrate((long) 1000.0);
         algos.add(scrypt);
         //----------------
-
 
 
         initViews();
@@ -75,11 +90,35 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
     }
 
     @Override
+    public void navigateToSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onDestroy() {
-        super.onDestroy();
-        presenter.detachView();
         if (isFinishing()) {
             presenter.destroy();
+        }
+        presenter.detachView();
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                presenter.settingsClicked();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
     }
 }

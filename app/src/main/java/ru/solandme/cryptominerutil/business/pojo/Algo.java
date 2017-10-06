@@ -1,5 +1,5 @@
 
-package ru.solandme.cryptominerutil.pojo;
+package ru.solandme.cryptominerutil.business.pojo;
 
 
 

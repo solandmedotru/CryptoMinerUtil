@@ -1,4 +1,4 @@
-package ru.solandme.cryptominerutil;
+package ru.solandme.cryptominerutil.data.network;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
