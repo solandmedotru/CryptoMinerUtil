@@ -36,13 +36,7 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_list);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        ActionBar ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayHomeAsUpEnabled(false);
-        }
 
         //Временнве данные, TODO сделать чтение из SharedPrefs
         Algo scrypt = new Algo();
@@ -57,24 +51,31 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
         if (presenter == null) {
             presenter = new CoinListPresenter();
         }
-
         presenter.attachView(this);
         presenter.viewIsReady();
+
     }
 
     private void initViews() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(false);
+        }
+
         coinList = findViewById(R.id.coin_list_rv);
         coinList.setHasFixedSize(true);
         coinList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    //Методы вызывается только из презентера
+    //Метод вызывается только из презентера, отображает прогресс
     @Override
     public void showProgress() {
         progressDialog = ProgressDialog.show(this, "", "Please, wait.");
     }
 
-    //Методы вызывается только из презентера
+    //Метод вызывается только из презентера
     @Override
     public void hideProgress() {
         if (progressDialog != null) {
@@ -82,13 +83,14 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
         }
     }
 
-    //Методы вызывается только из презентера
+    //Метод вызывается только из презентера
     @Override
     public void showCoinList(List<Coin> coins) {
         coinListAdapter = new CoinListAdapter(this, coins, algos);
         coinList.setAdapter(coinListAdapter);
     }
 
+    //Метод вызывается только из презентера
     @Override
     public void navigateToSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);

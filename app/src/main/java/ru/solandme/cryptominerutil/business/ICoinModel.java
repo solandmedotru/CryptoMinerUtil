@@ -4,7 +4,7 @@ import java.util.List;
 
 import ru.solandme.cryptominerutil.business.pojo.Coin;
 
-public interface IModel {
+public interface ICoinModel {
 
     void loadCoinList(List<String> arrayList);
 

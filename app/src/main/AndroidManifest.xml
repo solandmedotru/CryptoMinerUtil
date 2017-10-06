@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.settings.views.SettingsActivity"></activity>
+        <activity
+            android:name=".presentation.settings.views.SettingsActivity"
+            android:parentActivityName=".presentation.coinlist.views.CoinListActivity"/>
     </application>
 
 </manifest>

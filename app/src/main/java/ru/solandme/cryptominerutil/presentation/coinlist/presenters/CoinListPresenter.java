@@ -7,13 +7,13 @@ import java.util.List;
 
 import ru.solandme.cryptominerutil.business.CoinModel;
 import ru.solandme.cryptominerutil.presentation.coinlist.views.ICoinListView;
-import ru.solandme.cryptominerutil.business.IModel;
+import ru.solandme.cryptominerutil.business.ICoinModel;
 import ru.solandme.cryptominerutil.business.pojo.Coin;
 
-public class CoinListPresenter implements ICoinListPresenter, IModel.CallBack {
+public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBack {
 
     private ICoinListView view;
-    private IModel model;
+    private ICoinModel model;
 
     public CoinListPresenter() {
         model = new CoinModel(this);

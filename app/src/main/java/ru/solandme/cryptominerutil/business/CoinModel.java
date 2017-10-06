@@ -19,9 +19,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import ru.solandme.cryptominerutil.data.network.ZPoolService;
 import ru.solandme.cryptominerutil.business.pojo.Coin;
 
-public class CoinModel implements IModel {
+public class CoinModel implements ICoinModel {
 
-    private IModel.CallBack callBack;
+    private ICoinModel.CallBack callBack;
     private List<String> excludeAlgo;
 
     public CoinModel(CallBack callBack) {
