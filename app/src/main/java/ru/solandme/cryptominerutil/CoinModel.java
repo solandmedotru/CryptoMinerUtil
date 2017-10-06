@@ -63,6 +63,7 @@ public class CoinModel implements IModel {
                                 if (jsonObject.get(key) instanceof JSONObject) {
 
                                     if(excludeAlgo.contains(jsonObject.getJSONObject(key).getString("algo"))) continue; //Исключаем алго которые не нужно обрабатывать
+                                    if(jsonObject.getJSONObject(key).getLong("workers") < 2.0) continue; //Исключаем алго которые не нужно обрабатывать
 
                                     Coin coin = new Coin();
                                     coin.setTag(key);

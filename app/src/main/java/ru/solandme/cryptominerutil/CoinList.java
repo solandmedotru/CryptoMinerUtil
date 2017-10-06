@@ -17,7 +17,7 @@ public class CoinList extends AppCompatActivity implements ICoinListView {
 
     private ProgressDialog progressDialog;
     private RecyclerView coinList;
-    CoinListAdapter coinListAdapter;
+    private CoinListAdapter coinListAdapter;
     private List<Algo> algos = new ArrayList<>();
 
     private ICoinListPresenter presenter;

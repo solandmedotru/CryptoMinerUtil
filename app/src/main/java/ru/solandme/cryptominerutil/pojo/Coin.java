@@ -20,7 +20,25 @@ public class Coin {
     private Long shares;
     private Long timeSinceLast;
     private Long workers;
+    private Long difficultyNow;
+    private Long difficultyByDay;
     private String timeStamp;
+
+    public Long getDifficultyNow() {
+        return difficultyNow;
+    }
+
+    public void setDifficultyNow(Long difficultyNow) {
+        this.difficultyNow = difficultyNow;
+    }
+
+    public Long getDifficultyByDay() {
+        return difficultyByDay;
+    }
+
+    public void setDifficultyByDay(Long difficultyByDay) {
+        this.difficultyByDay = difficultyByDay;
+    }
 
     public String getId() {
         return id;
