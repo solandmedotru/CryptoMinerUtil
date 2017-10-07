@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,20 +17,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import ru.solandme.cryptominerutil.data.network.ZPoolService;
+import ru.solandme.cryptominerutil.business.pojo.Algo;
 import ru.solandme.cryptominerutil.business.pojo.Coin;
+import ru.solandme.cryptominerutil.data.network.ZPoolService;
 
 public class CoinModel implements ICoinModel {
 
     private ICoinModel.CallBack callBack;
-    private List<String> excludeAlgo;
+    private HashMap<String, Algo> algos;
 
     public CoinModel(CallBack callBack) {
         this.callBack = callBack;
     }
 
-    public void loadCoinList(List<String> excludeAlgo) {
-        this.excludeAlgo = excludeAlgo;
+    public void loadCoinList(HashMap<String, Algo> algos) {
+        this.algos = algos;
         syncDb();
     }
 
@@ -63,8 +65,15 @@ public class CoinModel implements ICoinModel {
                                 String key = keys.next();
                                 if (jsonObject.get(key) instanceof JSONObject) {
 
-                                    if(excludeAlgo.contains(jsonObject.getJSONObject(key).getString("algo"))) continue; //Исключаем алго которые не нужно обрабатывать
-                                    if(jsonObject.getJSONObject(key).getLong("workers") < 2.0) continue; //Исключаем алго которые не нужно обрабатывать
+                                    String algoKey = jsonObject.getJSONObject(key).getString("algo").toLowerCase().replace(" ", "_");
+
+
+                                    if(algos.get(algoKey) == null ) continue;
+
+                                    if (!algos.get(algoKey).isActive())
+                                        continue; //Исключаем алго которые не нужно обрабатывать
+                                    if (jsonObject.getJSONObject(key).getLong("workers") < 2.0)
+                                        continue; //Исключаем алго которые не нужно обрабатывать
 
                                     Coin coin = new Coin();
                                     coin.setTag(key);
@@ -75,10 +84,11 @@ public class CoinModel implements ICoinModel {
                                     coin.setHeight(jsonObject.getJSONObject(key).getLong("height"));
                                     coin.setWorkers(jsonObject.getJSONObject(key).getLong("workers"));
                                     coin.setShares(jsonObject.getJSONObject(key).getLong("shares"));
-                                    coin.setHashRate(jsonObject.getJSONObject(key).getLong("hashrate"));
+                                    coin.setHashRate(algos.get(algoKey).getHashrate());
                                     coin.setEstimate(jsonObject.getJSONObject(key).getString("estimate"));
                                     coin.setDayBlocks(jsonObject.getJSONObject(key).getLong("24h_blocks"));
-                                    coin.setDayBtc(jsonObject.getJSONObject(key).getDouble("24h_btc"));
+                                    double dayPoolBTC = jsonObject.getJSONObject(key).getDouble("24h_btc");
+                                    coin.setDayBtc(dayPoolBTC * algos.get(algoKey).getHashrate());
                                     coin.setLastBlock(jsonObject.getJSONObject(key).getLong("lastblock"));
                                     coin.setTimeSinceLast(jsonObject.getJSONObject(key).getLong("timesincelast"));
 

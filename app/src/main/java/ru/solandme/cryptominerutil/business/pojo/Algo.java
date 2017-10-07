@@ -7,10 +7,12 @@ public class Algo {
 
     private String name;
     private Long hashrate; //Hashrate измеряется в h/s
+    private boolean isActive;
 
-    public Algo(String name, Long hashrate) {
+    public Algo(String name, Long hashrate, boolean isActive) {
         this.name = name;
         this.hashrate = hashrate;
+        this.isActive = isActive;
     }
 
     public String getName() {
@@ -29,4 +31,11 @@ public class Algo {
         this.hashrate = hashrate;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

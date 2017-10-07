@@ -78,8 +78,8 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         holder.coinName.setText(coin.getName());
         holder.coinTag.setText(coin.getTag());
         holder.algorithm.setText(coin.getAlgo());
-        holder.hashrate.setText(getHashrateByAlgo(coin.getAlgo()).toString());
-        holder.profitBtcByDay.setText(String.format("%.8f", coin.getDayBtc() * getHashrateByAlgo(coin.getAlgo())));
+        holder.hashrate.setText(coin.getHashRate().toString());
+        holder.profitBtcByDay.setText(String.format("%.8f", coin.getDayBtc()));
         holder.profitMoneyByDay.setText(String.format("%.2f", coin.getDayBtc() * 4400)); //TODO добавить расчет по текущему курсу
         if (coin.getDifficultyNow() != null && coin.getDifficultyByDay() != null) {
             holder.difNow.setText(coin.getDifficultyNow().toString());
@@ -120,10 +120,6 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
                 notifyDataSetChanged();
             }
         });
-    }
-
-    private Long getHashrateByAlgo(String algorithm) {
-        return algos.get(algorithm.toLowerCase().replace(" ", "_")).getHashrate();
     }
 
     @Override

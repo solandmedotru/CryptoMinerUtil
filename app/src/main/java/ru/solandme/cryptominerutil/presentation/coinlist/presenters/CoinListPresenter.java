@@ -1,6 +1,5 @@
 package ru.solandme.cryptominerutil.presentation.coinlist.presenters;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -36,15 +35,14 @@ public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBac
 
     @Override
     public void viewIsReady() {
-        loadCoinList();
+        settingsModel.getAlgos();
     }
 
     @Override
-    public void loadCoinList() {
+    public void loadCoinList(HashMap algos) {
         view.showProgress();
-        settingsModel.getAlgos();
-        List<String> arrayList = Arrays.asList("scrypt", "sha256", "x11"); //TODO сделать список изменяемым и брать из SharedPrefs
-        model.loadCoinList(arrayList); //TODO сделать загрузку данных из репозитория. Или с базы если недавно обновлялись или из сети.
+
+        model.loadCoinList(algos);
     }
 
     @Override
@@ -66,6 +64,7 @@ public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBac
 
     @Override
     public void onAlgosReceived(HashMap algos) {
+        loadCoinList(algos);
     }
 
     @Override
