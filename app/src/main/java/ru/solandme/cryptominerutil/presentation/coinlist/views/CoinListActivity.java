@@ -37,9 +37,6 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_list);
 
-
-
-
         initViews();
 
         if (presenter == null) {

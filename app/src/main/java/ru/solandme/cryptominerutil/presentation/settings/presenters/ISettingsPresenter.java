@@ -7,4 +7,6 @@ public interface ISettingsPresenter {
     void detachView();
     void viewIsReady();
     void destroy();
+
+    void algoChecked(String key, boolean isActive);
 }

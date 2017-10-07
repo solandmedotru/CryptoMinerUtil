@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import ru.solandme.cryptominerutil.business.ISettingsModel;
 import ru.solandme.cryptominerutil.business.SettingsModel;
+import ru.solandme.cryptominerutil.business.pojo.Algo;
 import ru.solandme.cryptominerutil.presentation.settings.views.ISettingsView;
 
 public class SettingsPresenter implements ISettingsPresenter, ISettingsModel.CallBack {
@@ -42,8 +43,13 @@ public class SettingsPresenter implements ISettingsPresenter, ISettingsModel.Cal
     }
 
     @Override
-    public void onAlgosReceived(HashMap hashrates) {
-        view.showHashrates(hashrates);
+    public void algoChecked(String key, boolean isActive) {
+        model.saveAlgoActive(key, isActive);
+    }
+
+    @Override
+    public void onAlgosReceived(HashMap<String, Algo> algos) {
+        view.showAlgos(algos);
     }
 
     @Override

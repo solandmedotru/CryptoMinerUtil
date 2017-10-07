@@ -28,20 +28,22 @@
 
 
         <CheckedTextView
-            android:id="@+id/checkedTextView"
+            android:id="@+id/checkedBitcoreAlgo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="true"
-            android:text="Equihash"
-            app:layout_constraintBottom_toBottomOf="@+id/editText2"
+            android:gravity="center"
+            android:text="Bitcore"
+            app:layout_constraintBottom_toBottomOf="@+id/bitcore_edit_hashrate"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/algo_title" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/algo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -53,7 +55,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/bitcore_edit_hashrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -63,8 +65,8 @@
             android:inputType="numberDecimal"
             android:textAlignment="center"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/checkedTextView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintStart_toEndOf="@+id/checkedBitcoreAlgo"
+            app:layout_constraintTop_toBottomOf="@+id/algo_title" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>

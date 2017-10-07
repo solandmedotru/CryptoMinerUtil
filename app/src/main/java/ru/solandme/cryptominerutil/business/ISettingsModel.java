@@ -3,12 +3,14 @@ package ru.solandme.cryptominerutil.business;
 
 import java.util.HashMap;
 
+import ru.solandme.cryptominerutil.business.pojo.Algo;
+
 public interface ISettingsModel {
     void getAlgos();
-    void saveSettings();
+    void saveAlgoActive(String algo, boolean isActive);
 
     interface CallBack {
-        void onAlgosReceived(HashMap algos);
+        void onAlgosReceived(HashMap<String, Algo> algos);
         void onError(String errorMessage);
     }
 }
