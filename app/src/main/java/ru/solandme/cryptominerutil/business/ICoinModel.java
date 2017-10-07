@@ -11,7 +11,7 @@ public interface ICoinModel {
     void onDestroy();
 
     interface CallBack {
-        void onSuccess(List<Coin> coins);
+        void onCoinsListReceived(List<Coin> coins);
         void onError(String errorMessage);
     }
 }

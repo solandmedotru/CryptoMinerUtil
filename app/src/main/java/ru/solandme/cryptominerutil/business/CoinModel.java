@@ -53,7 +53,7 @@ public class CoinModel implements ICoinModel {
                 List<Coin> coins = new ArrayList<>();
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.i("onSuccess", response.body());
+                        Log.i("onCoinsListReceived", response.body());
 
                         String jsonString = response.body();
                         try {
@@ -88,7 +88,7 @@ public class CoinModel implements ICoinModel {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        callBack.onSuccess(coins);
+                        callBack.onCoinsListReceived(coins);
                     } else {
                         callBack.onError("Returned empty response");
                     }

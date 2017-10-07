@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ru.solandme.cryptominerutil.R;
@@ -55,10 +56,10 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
     }
 
     private List<Coin> coins;
-    private List<Algo> algos;
+    private HashMap<String, Algo> algos;
     private Context context;
 
-    CoinListAdapter(Context context, List<Coin> coins, List<Algo> algos) {
+    CoinListAdapter(Context context, List<Coin> coins, HashMap<String, Algo> algos) {
         this.coins = coins;
         this.algos = algos;
         this.context = context;
@@ -80,7 +81,7 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         holder.hashrate.setText(getHashrateByAlgo(coin.getAlgo()).toString());
         holder.profitBtcByDay.setText(String.format("%.8f", coin.getDayBtc() * getHashrateByAlgo(coin.getAlgo())));
         holder.profitMoneyByDay.setText(String.format("%.2f", coin.getDayBtc() * 4400)); //TODO добавить расчет по текущему курсу
-        if(coin.getDifficultyNow() != null && coin.getDifficultyByDay() != null) {
+        if (coin.getDifficultyNow() != null && coin.getDifficultyByDay() != null) {
             holder.difNow.setText(coin.getDifficultyNow().toString());
             holder.difByDay.setText(coin.getDifficultyByDay().toString());
         } else {
@@ -122,11 +123,7 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
     }
 
     private Long getHashrateByAlgo(String algorithm) {
-        Long hashrate = 0L;
-        for (Algo a : algos) {
-            if (a.getName().equals(algorithm)) hashrate = a.getHashrate();
-        }
-        return hashrate;
+        return algos.get(algorithm.toLowerCase().replace(" ", "_")).getHashrate();
     }
 
     @Override

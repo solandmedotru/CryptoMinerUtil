@@ -1,11 +1,10 @@
 package ru.solandme.cryptominerutil.presentation.settings.views;
 
-
-import android.content.Context;
+import java.util.HashMap;
 
 public interface ISettingsView {
 
     void showError(String message);
 
-    Context getContext();
+    void showHashrates(HashMap hashrates);
 }

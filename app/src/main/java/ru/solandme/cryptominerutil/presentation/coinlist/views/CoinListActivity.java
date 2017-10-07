@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import ru.solandme.cryptominerutil.R;
@@ -26,7 +27,7 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
     private ProgressDialog progressDialog;
     private RecyclerView coinList;
     private CoinListAdapter coinListAdapter;
-    private List<Algo> algos = new ArrayList<>();
+    private HashMap<String, Algo> algos = new HashMap<>();
 
     private ICoinListPresenter presenter;
 
@@ -37,13 +38,6 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
         setContentView(R.layout.activity_coin_list);
 
 
-
-        //Временнве данные, TODO сделать чтение из SharedPrefs
-        Algo scrypt = new Algo();
-        scrypt.setName("scrypt");
-        scrypt.setHashrate((long) 1000.0);
-        algos.add(scrypt);
-        //----------------
 
 
         initViews();

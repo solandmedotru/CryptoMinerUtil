@@ -1,12 +1,12 @@
 package ru.solandme.cryptominerutil.presentation.settings.views;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 import ru.solandme.cryptominerutil.R;
 import ru.solandme.cryptominerutil.presentation.settings.presenters.ISettingsPresenter;
@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
     }
 
     @Override
-    public Context getContext() {
-        return getApplicationContext();
+    public void showHashrates(HashMap hashrates) {
+
     }
 }

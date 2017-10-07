@@ -1,19 +1,19 @@
 package ru.solandme.cryptominerutil.presentation.settings.presenters;
 
 
-import android.content.SharedPreferences;
+import java.util.HashMap;
 
 import ru.solandme.cryptominerutil.business.ISettingsModel;
 import ru.solandme.cryptominerutil.business.SettingsModel;
 import ru.solandme.cryptominerutil.presentation.settings.views.ISettingsView;
 
-public class SettingsPresenter implements ISettingsPresenter {
+public class SettingsPresenter implements ISettingsPresenter, ISettingsModel.CallBack {
 
     private ISettingsView view;
     private ISettingsModel model;
 
     public SettingsPresenter() {
-        model = new SettingsModel();
+        model = new SettingsModel(this);
     }
 
     @Override
@@ -33,10 +33,21 @@ public class SettingsPresenter implements ISettingsPresenter {
     }
 
     private void loadSettings() {
+        model.getAlgos();
     }
 
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public void onAlgosReceived(HashMap hashrates) {
+        view.showHashrates(hashrates);
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+        view.showError(errorMessage);
     }
 }

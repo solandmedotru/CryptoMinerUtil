@@ -3,19 +3,24 @@ package ru.solandme.cryptominerutil.presentation.coinlist.presenters;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import ru.solandme.cryptominerutil.business.CoinModel;
-import ru.solandme.cryptominerutil.presentation.coinlist.views.ICoinListView;
 import ru.solandme.cryptominerutil.business.ICoinModel;
+import ru.solandme.cryptominerutil.business.ISettingsModel;
+import ru.solandme.cryptominerutil.business.SettingsModel;
 import ru.solandme.cryptominerutil.business.pojo.Coin;
+import ru.solandme.cryptominerutil.presentation.coinlist.views.ICoinListView;
 
-public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBack {
+public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBack, ISettingsModel.CallBack {
 
     private ICoinListView view;
     private ICoinModel model;
+    private ISettingsModel settingsModel;
 
     public CoinListPresenter() {
+        settingsModel = new SettingsModel(this);
         model = new CoinModel(this);
     }
 
@@ -37,7 +42,8 @@ public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBac
     @Override
     public void loadCoinList() {
         view.showProgress();
-        List<String> arrayList = Arrays.asList("scrypt", "sha256", "x11"); //TODO сделать список изменяемым и бырать из SharedPrefs
+        settingsModel.getAlgos();
+        List<String> arrayList = Arrays.asList("scrypt", "sha256", "x11"); //TODO сделать список изменяемым и брать из SharedPrefs
         model.loadCoinList(arrayList); //TODO сделать загрузку данных из репозитория. Или с базы если недавно обновлялись или из сети.
     }
 
@@ -53,9 +59,13 @@ public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBac
     }
 
     @Override
-    public void onSuccess(List<Coin> coins) {
+    public void onCoinsListReceived(List<Coin> coins) {
         view.hideProgress();
         view.showCoinList(sortByProfit(coins));
+    }
+
+    @Override
+    public void onAlgosReceived(HashMap algos) {
     }
 
     @Override
