@@ -14,4 +14,6 @@ public interface ICoinListPresenter {
 
 
     void settingsClicked();
+
+    void swipedLayout();
 }

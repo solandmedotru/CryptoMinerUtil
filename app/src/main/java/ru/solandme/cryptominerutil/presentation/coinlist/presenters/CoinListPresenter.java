@@ -57,6 +57,11 @@ public class CoinListPresenter implements ICoinListPresenter, ICoinModel.CallBac
     }
 
     @Override
+    public void swipedLayout() {
+        settingsModel.getAlgos();
+    }
+
+    @Override
     public void onCoinsListReceived(List<Coin> coins) {
         view.hideProgress();
         view.showCoinList(sortByProfit(coins));

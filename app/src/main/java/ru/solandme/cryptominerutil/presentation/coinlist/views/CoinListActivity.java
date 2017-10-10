@@ -3,6 +3,7 @@ package ru.solandme.cryptominerutil.presentation.coinlist.views;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,12 +23,12 @@ import ru.solandme.cryptominerutil.presentation.coinlist.presenters.CoinListPres
 import ru.solandme.cryptominerutil.presentation.coinlist.presenters.ICoinListPresenter;
 import ru.solandme.cryptominerutil.presentation.settings.views.SettingsActivity;
 
-public class CoinListActivity extends AppCompatActivity implements ICoinListView {
+public class CoinListActivity extends AppCompatActivity implements ICoinListView, SwipeRefreshLayout.OnRefreshListener {
 
-    private ProgressDialog progressDialog;
     private RecyclerView coinList;
     private CoinListAdapter coinListAdapter;
     private HashMap<String, Algo> algos = new HashMap<>();
+    private SwipeRefreshLayout swipeLayout;
 
     private ICoinListPresenter presenter;
 
@@ -48,6 +49,8 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
     }
 
     private void initViews() {
+        swipeLayout = findViewById(R.id.swipeLayout);
+        swipeLayout.setOnRefreshListener(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
@@ -63,14 +66,14 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
     //Метод вызывается только из презентера, отображает прогресс
     @Override
     public void showProgress() {
-        progressDialog = ProgressDialog.show(this, "", "Please, wait.");
+        swipeLayout.setRefreshing(true);
     }
 
     //Метод вызывается только из презентера
     @Override
     public void hideProgress() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
+        if (swipeLayout.isRefreshing()) {
+            swipeLayout.setRefreshing(false);
         }
     }
 
@@ -113,5 +116,10 @@ public class CoinListActivity extends AppCompatActivity implements ICoinListView
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.swipedLayout();
     }
 }

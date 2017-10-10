@@ -16,9 +16,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+import ru.solandme.cryptominerutil.MyApp;
 import ru.solandme.cryptominerutil.business.pojo.Algo;
 import ru.solandme.cryptominerutil.business.pojo.Coin;
+import ru.solandme.cryptominerutil.data.network.CoinApiHelpel;
 import ru.solandme.cryptominerutil.data.network.ZPoolService;
 
 public class CoinModel implements ICoinModel {
@@ -42,9 +43,8 @@ public class CoinModel implements ICoinModel {
 
     private void syncDb() {
 
-        Retrofit retrofit = getRetrofit();
-
-        ZPoolService zpoolApi = retrofit.create(ZPoolService.class);
+        CoinApiHelpel.resetRetrofit();
+        ZPoolService zpoolApi = CoinApiHelpel.requestCoinList(MyApp.getContext(), "https://zpool.ca/api/").create(ZPoolService.class);
 
         Call<String> stringCoins = zpoolApi.coinList();
 
@@ -110,13 +110,5 @@ public class CoinModel implements ICoinModel {
                 callBack.onError(t.getMessage());
             }
         });
-    }
-
-    @NonNull
-    private Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-                .baseUrl("https://zpool.ca/api/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
     }
 }
