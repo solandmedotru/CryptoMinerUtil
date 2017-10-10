@@ -24,7 +24,10 @@ public class CoinApiHelpel {
     private static final long CONNECTION_TIMEOUT = 10;
     private static Retrofit retrofit = null;
 
-    public static Retrofit requestCoinList(@NonNull Context context, String url) {
+    public CoinApiHelpel() {
+    }
+
+    public Retrofit requestCoinList(@NonNull Context context, String url) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(url)
@@ -39,7 +42,7 @@ public class CoinApiHelpel {
         retrofit = null;
     }
 
-    private static OkHttpClient getOkHttpClient(@NonNull final Context context) {
+    private  OkHttpClient getOkHttpClient(@NonNull final Context context) {
         OkHttpClient.Builder okClientBuilder = new OkHttpClient.Builder();
 
         File baseDir = context.getCacheDir();
@@ -66,7 +69,7 @@ public class CoinApiHelpel {
                     request = new Request.Builder()
                             .cacheControl(new CacheControl.Builder()
                                     .maxStale(1, TimeUnit.MINUTES)
-                                    .maxAge(0, TimeUnit.MINUTES)
+                                    .maxAge(1, TimeUnit.MINUTES)
                                     .build())
                             .url(request.url())
                             .build();
@@ -81,7 +84,7 @@ public class CoinApiHelpel {
         return okClientBuilder.build();
     }
 
-    private static boolean isNetworkAvailable(Context context) {
+    private boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
         if (info == null) return false;

@@ -24,6 +24,7 @@ import ru.solandme.cryptominerutil.data.network.ZPoolService;
 
 public class CoinModel implements ICoinModel {
 
+    private static final String TAG = CoinModel.class.getSimpleName();
     private ICoinModel.CallBack callBack;
     private HashMap<String, Algo> algos;
 
@@ -43,8 +44,8 @@ public class CoinModel implements ICoinModel {
 
     private void syncDb() {
 
-        CoinApiHelpel.resetRetrofit();
-        ZPoolService zpoolApi = CoinApiHelpel.requestCoinList(MyApp.getContext(), "https://zpool.ca/api/").create(ZPoolService.class);
+        CoinApiHelpel apiHelpel = new CoinApiHelpel();
+        ZPoolService zpoolApi = apiHelpel.requestCoinList(MyApp.getContext(), "https://zpool.ca/api/").create(ZPoolService.class);
 
         Call<String> stringCoins = zpoolApi.coinList();
 
@@ -96,7 +97,7 @@ public class CoinModel implements ICoinModel {
                                 }
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            callBack.onError(e.getMessage());
                         }
                         callBack.onCoinsListReceived(coins);
                     } else {
