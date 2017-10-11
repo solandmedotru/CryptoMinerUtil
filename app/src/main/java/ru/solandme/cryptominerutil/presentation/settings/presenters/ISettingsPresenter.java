@@ -9,4 +9,6 @@ public interface ISettingsPresenter {
     void destroy();
 
     void algoChecked(String key, boolean isActive);
+
+    void hashrateChanged(String algoName, String hashrate);
 }

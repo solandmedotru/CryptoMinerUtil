@@ -27,6 +27,11 @@ public class SettingsModel implements ISettingsModel {
         SharedPrefService.setBooleanPreference(MyApp.getContext(), key, isActive);
     }
 
+    @Override
+    public void saveHashrate(String algoName, String hashrate) {
+        SharedPrefService.setStringPreference(MyApp.getContext(), algoName, hashrate);
+    }
+
     private class LoadHashratesTask extends AsyncTask<Void, Void, HashMap<String, Algo>> {
 
         protected HashMap<String, Algo> doInBackground(Void[] params) {
