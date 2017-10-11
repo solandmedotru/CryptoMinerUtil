@@ -9,7 +9,9 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import ru.solandme.cryptominerutil.R;
 import ru.solandme.cryptominerutil.business.pojo.Algo;
@@ -35,20 +37,37 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
+        List<String> algoNames = Arrays.asList(
+                "Bitcore", "Blake2s", "Blakcoin", "C11", "Decred", "Equihash", "Groestl",
+                "Hmq1725", "Jha", "Keccak", "Lbry", "Lyra2v2", "Lyra2z", "M7m",
+                "Myr-gr", "Neoscrypt", "Nist5", "Quark", "Scrypt", "Sha256", "Sib", "Skein",
+                "Skunk", "Timetravel", "Tribus", "Veltor", "X11", "X11evo", "X13", "X14", "X15",
+                "X17", "Xevan", "Yescrypt");
+
+
+        HashMap<String, CheckedTextView> checkedAlgos = new HashMap<>();
+
         checkedBitcoreAlgo = findViewById(R.id.checkedBitcoreAlgo);
-        checkedBitcoreAlgo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkedBitcoreAlgo.isChecked()){
-                    checkedBitcoreAlgo.setChecked(false);
-                    presenter.algoChecked("bitcore_is_active", false);
+        checkedAlgos.put("Bitcore", checkedBitcoreAlgo);
+
+        for (HashMap.Entry<String, CheckedTextView> entry : checkedAlgos.entrySet()) {
+            final String algoName = entry.getKey();
+            final CheckedTextView view = entry.getValue();
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (view.isChecked()) {
+                        view.setChecked(false);
+                        presenter.algoChecked(algoName.toLowerCase() + "_is_active", false);
+                    } else {
+                        checkedBitcoreAlgo.setChecked(true);
+                        presenter.algoChecked(algoName.toLowerCase() + "_is_active", true);
+                    }
                 }
-                else {
-                    checkedBitcoreAlgo.setChecked(true);
-                    presenter.algoChecked("bitcore_is_active", true);
-                }
-            }
-        });
+            });
+        }
+
         bitcoreEditHashrate = findViewById(R.id.bitcore_edit_hashrate);
 
         if (presenter == null) {

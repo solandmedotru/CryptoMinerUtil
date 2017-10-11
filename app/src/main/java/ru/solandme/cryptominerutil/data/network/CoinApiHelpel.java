@@ -59,7 +59,7 @@ public class CoinApiHelpel {
                 if (!isNetworkAvailable(context)) {
                     request = new Request.Builder()
                             .cacheControl(new CacheControl.Builder()
-                                    .maxAge(10, TimeUnit.MINUTES)
+                                    .maxAge(30, TimeUnit.MINUTES)
                                     .maxStale(10, TimeUnit.MINUTES)
                                     .build())
                             .url(request.url())
@@ -68,7 +68,7 @@ public class CoinApiHelpel {
                 } else {
                     request = new Request.Builder()
                             .cacheControl(new CacheControl.Builder()
-                                    .maxStale(1, TimeUnit.MINUTES)
+                                    .maxStale(10, TimeUnit.MINUTES)
                                     .maxAge(1, TimeUnit.MINUTES)
                                     .build())
                             .url(request.url())
