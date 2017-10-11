@@ -20,9 +20,10 @@ import ru.solandme.cryptominerutil.presentation.settings.presenters.SettingsPres
 
 public class SettingsActivity extends AppCompatActivity implements ISettingsView {
 
-    private CheckedTextView checkedBitcoreAlgo;
-    private EditText bitcoreEditHashrate;
     private ISettingsPresenter presenter;
+
+    private HashMap<String, CheckedTextView> checkedAlgos;
+    private HashMap<String, EditText> editTextHashrates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +46,15 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
                 "X17", "Xevan", "Yescrypt");
 
 
-        HashMap<String, CheckedTextView> checkedAlgos = new HashMap<>();
+        checkedAlgos = new HashMap<>();
 
-        checkedBitcoreAlgo = findViewById(R.id.checkedBitcoreAlgo);
+
+        CheckedTextView checkedBitcoreAlgo = findViewById(R.id.checkedBitcoreAlgo);
+        CheckedTextView checkedBlake2sAlgo = findViewById(R.id.checkedBlake2sAlgo);
+        CheckedTextView checkedBlakcoinAlgo = findViewById(R.id.checkedBlakcoinsAlgo);
         checkedAlgos.put("Bitcore", checkedBitcoreAlgo);
+        checkedAlgos.put("Blake2s", checkedBlake2sAlgo);
+        checkedAlgos.put("Blakcoin", checkedBlakcoinAlgo);
 
         for (HashMap.Entry<String, CheckedTextView> entry : checkedAlgos.entrySet()) {
             final String algoName = entry.getKey();
@@ -61,14 +67,20 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
                         view.setChecked(false);
                         presenter.algoChecked(algoName.toLowerCase() + "_is_active", false);
                     } else {
-                        checkedBitcoreAlgo.setChecked(true);
+                        view.setChecked(true);
                         presenter.algoChecked(algoName.toLowerCase() + "_is_active", true);
                     }
                 }
             });
         }
 
-        bitcoreEditHashrate = findViewById(R.id.bitcore_edit_hashrate);
+        EditText bitcoreEditHashrate = findViewById(R.id.bitcore_edit_hashrate);
+        EditText blake2sEditHashrate = findViewById(R.id.blake2s_edit_hashrate);
+        EditText blakcoinEditHashrate = findViewById(R.id.blakcoin_edit_hashrate);
+        editTextHashrates = new HashMap<>();
+        editTextHashrates.put("Bitcore", bitcoreEditHashrate);
+        editTextHashrates.put("Blake2s", blake2sEditHashrate);
+        editTextHashrates.put("Blakcoin", blakcoinEditHashrate);
 
         if (presenter == null) {
             presenter = new SettingsPresenter();
@@ -85,7 +97,19 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
 
     @Override
     public void showAlgos(HashMap<String, Algo> algos) {
-        checkedBitcoreAlgo.setChecked(algos.get("bitcore").isActive());
-        bitcoreEditHashrate.setText(algos.get("bitcore").getHashrate().toString());
+
+        for (HashMap.Entry<String, EditText> entry : editTextHashrates.entrySet()) {
+            final String algoName = entry.getKey();
+            final EditText editText = entry.getValue();
+
+            editText.setText(algos.get(algoName.toLowerCase()).getHashrate().toString());
+        }
+        for (HashMap.Entry<String, CheckedTextView> entry : checkedAlgos.entrySet()) {
+            final String algoName = entry.getKey();
+            final CheckedTextView view = entry.getValue();
+
+            view.setChecked(algos.get(algoName.toLowerCase()).isActive());
+        }
+
     }
 }
