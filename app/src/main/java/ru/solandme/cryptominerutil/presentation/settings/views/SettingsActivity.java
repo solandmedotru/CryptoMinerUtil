@@ -95,7 +95,16 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
             editText.addTextChangedListener(new TextWatcher() {
 
                 public void afterTextChanged(Editable s) {
-                    presenter.hashrateChanged(algoName.toLowerCase() + "_hr", s.toString());
+
+                    try {
+                        long l = Long.parseLong(s.toString());
+                        presenter.hashrateChanged(algoName.toLowerCase() + "_hr", l);
+                    } catch (NumberFormatException nfe) {
+                        editText.setText(0);
+                        showError(nfe.getMessage());
+                    }
+
+
                 }
 
                 public void beforeTextChanged(CharSequence s, int start,

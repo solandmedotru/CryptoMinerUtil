@@ -9,7 +9,7 @@ public interface ISettingsModel {
     void getAlgos();
     void saveAlgoActive(String algo, boolean isActive);
 
-    void saveHashrate(String algoName, String hashrate);
+    void saveHashrate(String algoName, long hashrate);
 
     interface CallBack {
         void onAlgosReceived(HashMap<String, Algo> algos);

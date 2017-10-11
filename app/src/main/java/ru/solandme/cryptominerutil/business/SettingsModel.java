@@ -28,8 +28,8 @@ public class SettingsModel implements ISettingsModel {
     }
 
     @Override
-    public void saveHashrate(String algoName, String hashrate) {
-        SharedPrefService.setStringPreference(MyApp.getContext(), algoName, hashrate);
+    public void saveHashrate(String algoName, long hashrate) {
+        SharedPrefService.setLongPreference(MyApp.getContext(), algoName, hashrate);
     }
 
     private class LoadHashratesTask extends AsyncTask<Void, Void, HashMap<String, Algo>> {

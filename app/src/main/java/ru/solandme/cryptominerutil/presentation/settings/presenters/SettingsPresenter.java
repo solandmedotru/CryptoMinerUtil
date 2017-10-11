@@ -48,7 +48,7 @@ public class SettingsPresenter implements ISettingsPresenter, ISettingsModel.Cal
     }
 
     @Override
-    public void hashrateChanged(String algoName, String hashrate) {
+    public void hashrateChanged(String algoName, long hashrate) {
         model.saveHashrate(algoName, hashrate);
     }
 

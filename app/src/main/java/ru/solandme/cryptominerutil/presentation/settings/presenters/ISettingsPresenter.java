@@ -10,5 +10,5 @@ public interface ISettingsPresenter {
 
     void algoChecked(String key, boolean isActive);
 
-    void hashrateChanged(String algoName, String hashrate);
+    void hashrateChanged(String algoName, long hashrate);
 }
