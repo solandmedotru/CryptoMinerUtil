@@ -15,7 +15,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import ru.solandme.cryptominerutil.MyApp;
 import ru.solandme.cryptominerutil.business.pojo.Algo;
 import ru.solandme.cryptominerutil.business.pojo.Coin;
@@ -69,7 +68,7 @@ public class CoinModel implements ICoinModel {
                                     String algoKey = jsonObject.getJSONObject(key).getString("algo").toLowerCase().replace(" ", "_");
 
 
-                                    if(algos.get(algoKey) == null ) continue;
+                                    if (algos.get(algoKey) == null) continue;
 
                                     if (!algos.get(algoKey).isActive())
                                         continue; //Исключаем алго которые не нужно обрабатывать
@@ -89,7 +88,8 @@ public class CoinModel implements ICoinModel {
                                     coin.setEstimate(jsonObject.getJSONObject(key).getString("estimate"));
                                     coin.setDayBlocks(jsonObject.getJSONObject(key).getLong("24h_blocks"));
                                     double dayPoolBTC = jsonObject.getJSONObject(key).getDouble("24h_btc");
-                                    coin.setDayBtc(dayPoolBTC * algos.get(algoKey).getHashrate());
+
+                                    coin.setDayBtc(dayPoolBTC * getNormalizeHashrate(algoKey));
                                     coin.setLastBlock(jsonObject.getJSONObject(key).getLong("lastblock"));
                                     coin.setTimeSinceLast(jsonObject.getJSONObject(key).getLong("timesincelast"));
 
@@ -111,5 +111,22 @@ public class CoinModel implements ICoinModel {
                 callBack.onError(t.getMessage());
             }
         });
+    }
+
+    private Long getNormalizeHashrate(String algoKey) {
+        switch (algoKey.toLowerCase()) {
+            case "blake":
+            case "decret":
+            case "x11":
+            case "quark":
+            case "qubit":
+                return algos.get(algoKey).getHashrate() / 1000000000000L;
+            case "sha256":
+                return algos.get(algoKey).getHashrate() / 1000000000000000L;
+            case "equihash":
+                return algos.get(algoKey).getHashrate() / 1000000L;
+            default:
+                return algos.get(algoKey).getHashrate() / 1000000000L;
+        }
     }
 }

@@ -80,7 +80,7 @@ public class CoinListAdapter extends RecyclerView.Adapter<CoinListAdapter.CoinVi
         holder.algorithm.setText(coin.getAlgo());
         holder.hashrate.setText(coin.getHashRate().toString());
         holder.profitBtcByDay.setText(String.format("%.8f", coin.getDayBtc()));
-        holder.profitMoneyByDay.setText(String.format("%.2f", coin.getDayBtc() * 4400)); //TODO добавить расчет по текущему курсу
+        holder.profitMoneyByDay.setText(String.format("%.2f", coin.getDayBtc() * 6100)); //TODO добавить расчет по текущему курсу
         if (coin.getDifficultyNow() != null && coin.getDifficultyByDay() != null) {
             holder.difNow.setText(coin.getDifficultyNow().toString());
             holder.difByDay.setText(coin.getDifficultyByDay().toString());
